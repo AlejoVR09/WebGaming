@@ -6,23 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BUCHEMON</title>
     <link rel="stylesheet" href="assets/css/styleBuche.css">
+    <script src="assets/js/buchemon.js"></script>
 </head>
 <body>
     <h1>BUCHEMON!🎂🥙🌮</h1>
     <section class="seleccion--buche">
         <h2>Elige a tu Buchemon</h2>
         <div class="seleccion_container">
-            <p class="seleccion_container--parrafo">Buchemon</p>
-            <button class="seleccion_container--button">Seleccionar</button>
+            <label for="tortita">tortita</label>
+            <input type="radio" name="buchemon" id="tortita">
+            <label for="bananin">bananin</label>
+            <input type="radio" name="buchemon" id="bananin">
+            <label for="pollito">pollito</label>
+            <input type="radio" name="buchemon" id="pollito">
+            <button class="seleccion_container--button" id="seleccion--buche">Seleccionar</button>
         </div>  
     </section>
     <section class="seleccion-ataque">
         <h2>Elige a tu ataque</h2>
-        <div class="seleccion_container">
-            <p class="seleccion_container--parrafo">Buchemon</p>
-            <button class="seleccion_container--button">Seleccionar</button>
+        <div class="ataque_container">
+            <p class="ataque_container--vidaAliado">Tu buchemon <span id="bucheAliado"></span> tiene <span id="bucheAlieadoVida">3</span> vidas</p>
+            <p class="ataque_container--vidaAliado">Buchemon enemigo <span id="bucheEnemigo"></span> tiene <span id="bucheEnemigoVida">3</span> vidas</p>
+            <div class="ataque_container--opcion">
+                <button class="seleccion_container--button">Fueg🔥</button>
+                <button class="seleccion_container--button">Agua💧</button>
+                <button class="seleccion_container--button">Tierra🌱</button>
+            </div>
         </div>
-        
     </section>
+    <section class="feedback">
+        <p>Tu buchemon ataco con FUEGO. El buchemon enemigo ataco con TIERRA - GANASTE !</p>
+    </section>
+    <section class="reiniciar">
+        <button>Reiniciar</button>
+    </section>
+    
 </body>
 </html>
