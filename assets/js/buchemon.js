@@ -1,8 +1,16 @@
 let ataqueJugador;
 let ataquePC;
+let vidasJugador=3;
+let vidasPC=3;
+
 
 function gameDevelop(){
-    let btnSeleccion = document.getElementById('seleccion--buche');
+    let sectionAtaque=document.getElementById('seleccion-ataque')
+    sectionAtaque.style.display="none"
+    let sectionReinicio=document.getElementById('reiniciar')
+    sectionReinicio.style.display='none'
+
+    let btnSeleccion = document.getElementById('seleccion-buche');
     btnSeleccion.addEventListener('click',seleccionBuchemon);
     let btnFuego = document.getElementById('ataqueFuego');
     btnFuego.addEventListener('click',ataqueFuego);
@@ -10,6 +18,8 @@ function gameDevelop(){
     btnAgua.addEventListener('click',ataqueAgua);
     let btnTierra = document.getElementById('ataqueTierra');
     btnTierra.addEventListener('click',ataqueTierra); 
+    let btnReload = document.getElementById('btnReload');
+    btnReload.addEventListener('click',reloadPage);
 
 }
 
@@ -18,20 +28,25 @@ function seleccionBuchemon(){
     let inputBananin=document.getElementById('bananin');
     let inputPollito=document.getElementById('pollito');
     let spanBucheAliado=document.getElementById('bucheAliado');
-    if(inputTortita.checked){
-        spanBucheAliado.innerHTML='Tortita';
+    if(inputTortita.checked==false && inputPollito.checked==false && inputBananin.checked==false){
+        alert("Seleccione un Buchemon"); 
     }   
-    else if(inputBananin.checked){
-        spanBucheAliado.innerHTML="Bananin";
-    }
-    else if(inputPollito.checked){
-        spanBucheAliado.innerHTML="Pollito";
-    }
-    else {
-        alert("Seleccione un Buchemon");
-    }
-
-    seleccionBuchemonEnemigo();
+    else{
+        if(inputTortita.checked){
+            spanBucheAliado.innerHTML='Tortita';
+        }
+        else if(inputBananin.checked){
+            spanBucheAliado.innerHTML="Bananin";
+        }
+        else if(inputPollito.checked){
+            spanBucheAliado.innerHTML="Pollito";
+        }
+        let sectionAtaque=document.getElementById('seleccion-ataque')
+        sectionAtaque.style.display="block"
+        let sectionBuche=document.getElementById('seleccion--buche')
+        sectionBuche.style.display="none"
+        seleccionBuchemonEnemigo();
+    } 
 }
 
 function seleccionBuchemonEnemigo(){
@@ -80,27 +95,66 @@ function ataqueEnemigo(){
         ataquePC="Tierra";
     }
 
-    fedback();
+    playing();
 }
 
-function fedback(){
+function fedback(resultado){
     let sectionMensaje=document.getElementById('feedback');
     let parrafo=document.createElement('p');
-    parrafo.innerHTML='Tu buchemon ataco con '+ataqueJugador+'. El buchemon enemigo ataco con '+ataquePC+' - '+playing()+' !';
+
+    parrafo.innerHTML='Tu buchemon ataco con '+ataqueJugador+'. El buchemon enemigo ataco con '+ataquePC+' - '+resultado+' !';
+    
 
     sectionMensaje.appendChild(parrafo)
+
 }
 
-function playing(jugador, maquina){
+function playing(jugador, maquina){   
+    let spanBucheAliadoVida=document.getElementById('bucheAliadoVida');
+    let spanBucheEnemigoVida=document.getElementById('bucheEnemigoVida');
     if ((ataqueJugador == 'Fuego' && ataquePC == 'Tierra') || (ataqueJugador == 'Agua' && ataquePC == 'Fuego') || (ataqueJugador == 'Tierra' && ataquePC == 'Agua')) {
-        return 'GANASTE'
+        spanBucheEnemigoVida.innerHTML=--vidasPC;
+        fedback('Ganaste')
     }
     else if (ataqueJugador == ataquePC) {
-        return 'EMPATE'
+        fedback('Empate')
     } 
     else {
-        return 'PERDISTE'
+        spanBucheAliadoVida.innerHTML=--vidasJugador;
+        fedback('Perdiste')
+    }
+
+    revisarVidas();
+}
+
+function fedbackVidas(resultadoFinal){
+    let sectionMensaje=document.getElementById('feedback');
+    let parrafo=document.createElement('p');
+
+    parrafo.innerHTML=resultadoFinal;
+    
+    sectionMensaje.appendChild(parrafo)
+
+    let btnFuego = document.getElementById('ataqueFuego');
+    btnFuego.disabled=true;
+    let btnAgua = document.getElementById('ataqueAgua');
+    btnAgua.disabled=true;
+    let btnTierra = document.getElementById('ataqueTierra');
+    btnTierra.disabled=true;
+    let sectionReload=document.getElementById('reiniciar')
+    sectionReload.style.display="block"
+
+}
+
+function revisarVidas(){
+    if (vidasJugador==0) {
+        fedbackVidas("Perdiste por gei!");
+    } else if (vidasPC==0) {    
+        fedbackVidas("Felicidades Ganaste!!!");
     }
 }
 
+function reloadPage(){
+    location.reload();
+}
 window.addEventListener('load',gameDevelop);
