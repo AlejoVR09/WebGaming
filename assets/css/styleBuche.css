@@ -145,6 +145,11 @@ input {
     text-align: center;
 }
 
+input:hover + label{
+    cursor: pointer;
+}
+
 input:checked + label {
     background-color: #576CBC;
+    
 }
