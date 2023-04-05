@@ -3,13 +3,10 @@
 
 /* Botones */
 const btnSeleccion = document.getElementById('seleccion-buche');
-const btnFuego = document.getElementById('ataqueFuego');
-const btnAgua = document.getElementById('ataqueAgua');
-const btnTierra = document.getElementById('ataqueTierra');
 const btnReload = document.getElementById('btnReload');
-
-
-
+let btnFuego;
+let btnAgua;
+let btnTierra;
 
 /* Buchemones */
 let inputHipodoge;
@@ -29,9 +26,11 @@ const sectionMensaje=document.getElementById('notificacion');
 const sectionReload=document.getElementById('reiniciar')
 const ataquePlayer=document.getElementById('ataqueJugador');
 const ataqueMaquina=document.getElementById('ataqueEnemigo');
+const ataqueContainer=document.getElementById('ataqueContainer');
 
 /* Variables */
 let mokepones = [];
+let buchemonJugador;
 let ataqueJugador;
 let ataquePC;
 let vidasJugador=3;
@@ -59,28 +58,28 @@ let ratigueya = new Mokepon('ratigueya',"https://static.platzi.com/media/tmp/cla
 
 
 hipodoge.ataques.push(
-    { nombre: '💧', id: 'boton-agua' },
-    { nombre: '💧', id: 'boton-agua' },
-    { nombre: '💧', id: 'boton-agua' },
-    { nombre: '🔥', id: 'boton-fuego' },
-    { nombre: '🌱', id: 'boton-tierra' },
+    { nombre: 'Agua💧', id: 'ataqueAgua' },
+    { nombre: 'Agua💧', id: 'ataqueAgua' },
+    { nombre: 'Agua💧', id: 'ataqueAgua' },
+    { nombre: 'Fuego🔥', id: 'ataqueFuego' },
+    { nombre: 'Tierra🌱', id: 'ataqueTierra' },
 )
 
 capipepo.ataques.push(
-    { nombre: '🌱', id: 'boton-tierra' },
-    { nombre: '🌱', id: 'boton-tierra' },
-    { nombre: '🌱', id: 'boton-tierra' },
-    { nombre: '💧', id: 'boton-agua' },
-    { nombre: '🔥', id: 'boton-fuego' },
+    { nombre: 'Tierra🌱', id: 'ataqueTierra' },
+    { nombre: 'Tierra🌱', id: 'ataqueTierra' },
+    { nombre: 'Tierra🌱', id: 'ataqueTierra' },
+    { nombre: 'Agua💧', id: 'ataqueAgua' },
+    { nombre: 'Fuego🔥', id: 'ataqueFuego' },
     
 )
 
 ratigueya.ataques.push(
-    { nombre: '🔥', id: 'boton-fuego' },
-    { nombre: '🔥', id: 'boton-fuego' },
-    { nombre: '🔥', id: 'boton-fuego' },
-    { nombre: '💧', id: 'boton-agua' },
-    { nombre: '🌱', id: 'boton-tierra' },
+    { nombre: 'Fuego🔥', id: 'ataqueFuego' },
+    { nombre: 'Fuego🔥', id: 'ataqueFuego' },
+    { nombre: 'Fuego🔥', id: 'ataqueFuego' },
+    { nombre: 'Agua💧', id: 'ataqueAgua' },
+    { nombre: 'Tierra🌱', id: 'ataqueTierra' },
 )
 
 mokepones.push(hipodoge,capipepo,ratigueya);
@@ -107,10 +106,7 @@ function gameDevelop(){
     inputRatigueya=document.getElementById('ratigueya'); 
 
     btnSeleccion.addEventListener('click',seleccionBuchemon);
-
-    btnFuego.addEventListener('click',ataqueFuego);
-    btnAgua.addEventListener('click',ataqueAgua);
-    btnTierra.addEventListener('click',ataqueTierra); 
+ 
     btnReload.addEventListener('click',reloadPage);
 
 
@@ -124,25 +120,28 @@ function seleccionBuchemon(){
     else{
         if(inputHipodoge.checked){
             spanBucheAliado.innerHTML=inputHipodoge.id;
+            buchemonJugador=inputHipodoge.id;
         }
         else if(inputCapipepo.checked){
             spanBucheAliado.innerHTML=inputCapipepo.id;
+            buchemonJugador=inputCapipepo.id;
         }
         else if(inputRatigueya.checked){
             spanBucheAliado.innerHTML=inputRatigueya.id;
+            buchemonJugador=inputRatigueya.id;
         }
         
         sectionAtaque.style.display="flex"
         sectionBuche.style.display="none"
 
+        extraerAtaques(buchemonJugador);
         seleccionBuchemonEnemigo();
     } 
 }
 
 function seleccionBuchemonEnemigo(){
-    let bucheEnemigo=alet(0,mokepones.length-1);
-
-    spanBucheEnemigo.innerHTML= mokepones[bucheEnemigo].nombre;
+    let bucheEnemigo=alet(1,mokepones.length);
+    spanBucheEnemigo.innerHTML= mokepones[bucheEnemigo-1].nombre;
 }
 
 /* Funciones de ataque */
@@ -190,6 +189,35 @@ function playing(jugador, maquina){
     }
 
     revisarVidas();
+}
+
+function extraerAtaques(buchemonJugador){
+    let ataquesJugador;
+    for (let i = 0; i < mokepones.length; i++) {
+        if (buchemonJugador===mokepones[i].nombre) {
+            ataques=mokepones[i].ataques;
+            
+        }
+    }
+    mostrarAtaques(ataques)
+}
+
+function mostrarAtaques(ataques){
+    
+    ataques.forEach((ataque) =>{
+        let ataquePropio= `<button class="ataque_container--button" id=${ataque.id}>${ataque.nombre}</button>`
+
+        ataqueContainer.innerHTML+=ataquePropio;
+        
+    });   
+    btnFuego = document.getElementById('ataqueFuego');
+    btnAgua = document.getElementById('ataqueAgua');
+    btnTierra = document.getElementById('ataqueTierra');
+    btnFuego.addEventListener('click',ataqueFuego);
+    btnAgua.addEventListener('click',ataqueAgua);
+    btnTierra.addEventListener('click',ataqueTierra);
+
+
 }
 
 /* Funciones de mensajes */
