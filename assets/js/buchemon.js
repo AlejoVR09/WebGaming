@@ -35,7 +35,7 @@ let ataquePC;
 let vidasJugador=3;
 let vidasPC=3;
 
-
+/* Funciones de desarrollo */
 function gameDevelop(){
     sectionAtaque.style.display="none"
     sectionReload.style.display='none'
@@ -83,10 +83,7 @@ function seleccionBuchemonEnemigo(){
         spanBucheEnemigo.innerHTML="Ratigueya";
     }
 }
-
-function alet(min, max){
-    return rand=Math.floor(Math.random()*(max-min+1)+1);
-}
+/* Funciones de ataque */
 
 function ataqueFuego(){
     ataqueJugador='Fuego';
@@ -118,22 +115,6 @@ function ataqueEnemigo(){
     playing();
 }
 
-function fedback(resultado){
-
-    
-    let nuevoAtaqueJugador=document.createElement('p');
-    let nuevoAtaqueEnemigo=document.createElement('p');
-
-    sectionMensaje.innerHTML=resultado;
-    nuevoAtaqueJugador.innerHTML=ataqueJugador;
-    nuevoAtaqueEnemigo.innerHTML=ataquePC;
-    
-
-    ataquePlayer.appendChild(nuevoAtaqueJugador);
-    ataqueMaquina.appendChild(nuevoAtaqueEnemigo);
-
-}
-
 function playing(jugador, maquina){   
     if ((ataqueJugador == 'Fuego' && ataquePC == 'Tierra') || (ataqueJugador == 'Agua' && ataquePC == 'Fuego') || (ataqueJugador == 'Tierra' && ataquePC == 'Agua')) {
         spanBucheEnemigoVida.innerHTML=--vidasPC;
@@ -150,6 +131,23 @@ function playing(jugador, maquina){
     revisarVidas();
 }
 
+/* Funciones de mensajes */
+
+
+function fedback(resultado){
+    let nuevoAtaqueJugador=document.createElement('p');
+    let nuevoAtaqueEnemigo=document.createElement('p');
+
+    sectionMensaje.innerHTML=resultado;
+    nuevoAtaqueJugador.innerHTML=ataqueJugador;
+    nuevoAtaqueEnemigo.innerHTML=ataquePC;
+    
+
+    ataquePlayer.appendChild(nuevoAtaqueJugador);
+    ataqueMaquina.appendChild(nuevoAtaqueEnemigo);
+
+}
+
 function fedbackVidas(resultadoFinal){
     sectionMensaje.innerHTML=resultadoFinal
 
@@ -159,6 +157,12 @@ function fedbackVidas(resultadoFinal){
     
     sectionReload.style.display="block"
 
+}
+
+
+/* Funciones auxiliares */
+function alet(min, max){
+    return rand=Math.floor(Math.random()*(max-min+1)+1);
 }
 
 function revisarVidas(){
@@ -172,4 +176,9 @@ function revisarVidas(){
 function reloadPage(){
     location.reload();
 }
+
+
+
+
+
 window.addEventListener('load',gameDevelop);
