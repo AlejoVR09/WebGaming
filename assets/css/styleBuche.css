@@ -56,11 +56,10 @@ input {
     margin: 1rem;
     border-radius: 2rem;
     font-size: 2.4rem;
+    text-transform: capitalize;
 }
 .seleccion_container--tarjeta img {
     width: 12rem;
-    
-    
 }
 
 .seleccion_container--parrafo{
@@ -147,6 +146,10 @@ input {
 
 input:hover + label{
     cursor: pointer;
+}
+
+#bucheAliado, #bucheEnemigo {
+    text-transform: capitalize;
 }
 
 input:checked + label {

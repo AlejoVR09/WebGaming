@@ -12,14 +12,15 @@ const btnReload = document.getElementById('btnReload');
 
 
 /* Buchemones */
-const inputHipodoge=document.getElementById('hipodoge');
-const inputCapipepo=document.getElementById('capipepo');
-const inputRatigueya=document.getElementById('ratigueya');
+let inputHipodoge;
+let inputCapipepo;
+let inputRatigueya;
 
 
 /* Componentes */
-const sectionAtaque=document.getElementById('seleccion-ataque')
-const sectionBuche=document.getElementById('seleccion--buche')
+const sectionAtaque=document.getElementById('seleccion-ataque');
+const sectionBuche=document.getElementById('seleccion--buche');
+const seleccionTarjeta=document.getElementById('seleccionTarjeta');
 const spanBucheAliado=document.getElementById('bucheAliado');
 const spanBucheEnemigo=document.getElementById('bucheEnemigo');
 const spanBucheAliadoVida=document.getElementById('bucheAliadoVida');
@@ -56,7 +57,6 @@ let capipepo = new Mokepon('capipepo',"https://static.platzi.com/media/tmp/class
 
 let ratigueya = new Mokepon('ratigueya',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_ratigueya_attack.png",5)
 
-mokepones.push(hipodoge,capipepo,ratigueya);
 
 hipodoge.ataques.push(
     { nombre: '💧', id: 'boton-agua' },
@@ -83,12 +83,28 @@ ratigueya.ataques.push(
     { nombre: '🌱', id: 'boton-tierra' },
 )
 
-
+mokepones.push(hipodoge,capipepo,ratigueya);
 
 /* Funciones de desarrollo */
 function gameDevelop(){
     sectionAtaque.style.display="none"
     sectionReload.style.display='none'
+
+    mokepones.forEach((mokepon) =>{
+        let data= `
+        <input type="radio" name="buchemon" id=${mokepon.nombre} />
+        <label class="seleccion_container--tarjeta" for=${mokepon.nombre}>
+            <p>${mokepon.nombre}</p>
+            <img src=${mokepon.foto} alt=${mokepon.nombre} >
+        </label>`;
+
+        seleccionTarjeta.innerHTML+=data;
+
+        
+    });    
+    inputHipodoge=document.getElementById('hipodoge');
+    inputCapipepo=document.getElementById('capipepo');
+    inputRatigueya=document.getElementById('ratigueya'); 
 
     btnSeleccion.addEventListener('click',seleccionBuchemon);
 
@@ -96,6 +112,8 @@ function gameDevelop(){
     btnAgua.addEventListener('click',ataqueAgua);
     btnTierra.addEventListener('click',ataqueTierra); 
     btnReload.addEventListener('click',reloadPage);
+
+
 
 }
 
@@ -105,36 +123,29 @@ function seleccionBuchemon(){
     }   
     else{
         if(inputHipodoge.checked){
-            spanBucheAliado.innerHTML='Hipodoge';
+            spanBucheAliado.innerHTML=inputHipodoge.id;
         }
         else if(inputCapipepo.checked){
-            spanBucheAliado.innerHTML="Capipepo";
+            spanBucheAliado.innerHTML=inputCapipepo.id;
         }
         else if(inputRatigueya.checked){
-            spanBucheAliado.innerHTML="Ratigueya";
+            spanBucheAliado.innerHTML=inputRatigueya.id;
         }
         
         sectionAtaque.style.display="flex"
-        
         sectionBuche.style.display="none"
+
         seleccionBuchemonEnemigo();
     } 
 }
 
 function seleccionBuchemonEnemigo(){
-    let bucheEnemigo=alet(1,3);
-    if(bucheEnemigo==1){
-        spanBucheEnemigo.innerHTML='Hipodoge';
-    }   
-    else if(bucheEnemigo==2){
-        spanBucheEnemigo.innerHTML="Capipepo";
-    }
-    else{
-        spanBucheEnemigo.innerHTML="Ratigueya";
-    }
-}
-/* Funciones de ataque */
+    let bucheEnemigo=alet(0,mokepones.length-1);
 
+    spanBucheEnemigo.innerHTML= mokepones[bucheEnemigo].nombre;
+}
+
+/* Funciones de ataque */
 function ataqueFuego(){
     ataqueJugador='Fuego';
     ataqueEnemigo();
@@ -182,8 +193,6 @@ function playing(jugador, maquina){
 }
 
 /* Funciones de mensajes */
-
-
 function fedback(resultado){
     let nuevoAtaqueJugador=document.createElement('p');
     let nuevoAtaqueEnemigo=document.createElement('p');
@@ -209,7 +218,6 @@ function fedbackVidas(resultadoFinal){
 
 }
 
-
 /* Funciones auxiliares */
 function alet(min, max){
     return rand=Math.floor(Math.random()*(max-min+1)+1);
@@ -226,9 +234,5 @@ function revisarVidas(){
 function reloadPage(){
     location.reload();
 }
-
-
-
-
 
 window.addEventListener('load',gameDevelop);
