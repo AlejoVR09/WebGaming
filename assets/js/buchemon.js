@@ -1,3 +1,35 @@
+/* Funciones */
+
+
+/* Botones */
+const btnSeleccion = document.getElementById('seleccion-buche');
+const btnFuego = document.getElementById('ataqueFuego');
+const btnAgua = document.getElementById('ataqueAgua');
+const btnTierra = document.getElementById('ataqueTierra');
+const btnReload = document.getElementById('btnReload');
+
+
+
+
+/* Buchemones */
+const inputHipodoge=document.getElementById('hipodoge');
+const inputCapipepo=document.getElementById('capipepo');
+const inputRatigueya=document.getElementById('ratigueya');
+
+
+/* Componentes */
+const sectionAtaque=document.getElementById('seleccion-ataque')
+const sectionBuche=document.getElementById('seleccion--buche')
+const spanBucheAliado=document.getElementById('bucheAliado');
+const spanBucheEnemigo=document.getElementById('bucheEnemigo');
+const spanBucheAliadoVida=document.getElementById('bucheAliadoVida');
+const spanBucheEnemigoVida=document.getElementById('bucheEnemigoVida');
+const sectionMensaje=document.getElementById('notificacion');
+const sectionReload=document.getElementById('reiniciar')
+const ataquePlayer=document.getElementById('ataqueJugador');
+const ataqueMaquina=document.getElementById('ataqueEnemigo');
+
+/* Variables */
 let ataqueJugador;
 let ataquePC;
 let vidasJugador=3;
@@ -5,29 +37,19 @@ let vidasPC=3;
 
 
 function gameDevelop(){
-    let sectionAtaque=document.getElementById('seleccion-ataque')
     sectionAtaque.style.display="none"
-    let sectionReinicio=document.getElementById('reiniciar')
-    sectionReinicio.style.display='none'
+    sectionReload.style.display='none'
 
-    let btnSeleccion = document.getElementById('seleccion-buche');
     btnSeleccion.addEventListener('click',seleccionBuchemon);
-    let btnFuego = document.getElementById('ataqueFuego');
+
     btnFuego.addEventListener('click',ataqueFuego);
-    let btnAgua = document.getElementById('ataqueAgua');
     btnAgua.addEventListener('click',ataqueAgua);
-    let btnTierra = document.getElementById('ataqueTierra');
     btnTierra.addEventListener('click',ataqueTierra); 
-    let btnReload = document.getElementById('btnReload');
     btnReload.addEventListener('click',reloadPage);
 
 }
 
 function seleccionBuchemon(){
-    let inputHipodoge=document.getElementById('hipodoge');
-    let inputCapipepo=document.getElementById('capipepo');
-    let inputRatigueya=document.getElementById('ratigueya');
-    let spanBucheAliado=document.getElementById('bucheAliado');
     if(inputHipodoge.checked==false && inputRatigueya.checked==false && inputCapipepo.checked==false){
         alert("Seleccione un Buchemon"); 
     }   
@@ -41,9 +63,9 @@ function seleccionBuchemon(){
         else if(inputRatigueya.checked){
             spanBucheAliado.innerHTML="Ratigueya";
         }
-        let sectionAtaque=document.getElementById('seleccion-ataque')
+        
         sectionAtaque.style.display="flex"
-        let sectionBuche=document.getElementById('seleccion--buche')
+        
         sectionBuche.style.display="none"
         seleccionBuchemonEnemigo();
     } 
@@ -51,7 +73,6 @@ function seleccionBuchemon(){
 
 function seleccionBuchemonEnemigo(){
     let bucheEnemigo=alet(1,3);
-    let spanBucheEnemigo=document.getElementById('bucheEnemigo');
     if(bucheEnemigo==1){
         spanBucheEnemigo.innerHTML='Hipodoge';
     }   
@@ -84,7 +105,6 @@ function ataqueTierra(){
 
 function ataqueEnemigo(){
     let ataqueAleatorioEnemigo=alet(1,3);
-    let spanAtaqueEnemigo=document.getElementById('');
     if(ataqueAleatorioEnemigo==1){
         ataquePC='Fuego';
     }   
@@ -99,9 +119,7 @@ function ataqueEnemigo(){
 }
 
 function fedback(resultado){
-    let sectionMensaje=document.getElementById('notificacion');
-    let ataquePlayer=document.getElementById('ataqueJugador');
-    let ataqueMaquina=document.getElementById('ataqueEnemigo');
+
     
     let nuevoAtaqueJugador=document.createElement('p');
     let nuevoAtaqueEnemigo=document.createElement('p');
@@ -117,8 +135,6 @@ function fedback(resultado){
 }
 
 function playing(jugador, maquina){   
-    let spanBucheAliadoVida=document.getElementById('bucheAliadoVida');
-    let spanBucheEnemigoVida=document.getElementById('bucheEnemigoVida');
     if ((ataqueJugador == 'Fuego' && ataquePC == 'Tierra') || (ataqueJugador == 'Agua' && ataquePC == 'Fuego') || (ataqueJugador == 'Tierra' && ataquePC == 'Agua')) {
         spanBucheEnemigoVida.innerHTML=--vidasPC;
         fedback('Ganaste')
@@ -135,17 +151,12 @@ function playing(jugador, maquina){
 }
 
 function fedbackVidas(resultadoFinal){
-    let sectionMensaje=document.getElementById('notificacion');
-    
     sectionMensaje.innerHTML=resultadoFinal
 
-    let btnFuego = document.getElementById('ataqueFuego');
     btnFuego.disabled=true;
-    let btnAgua = document.getElementById('ataqueAgua');
     btnAgua.disabled=true;
-    let btnTierra = document.getElementById('ataqueTierra');
     btnTierra.disabled=true;
-    let sectionReload=document.getElementById('reiniciar')
+    
     sectionReload.style.display="block"
 
 }
