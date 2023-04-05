@@ -24,25 +24,25 @@ function gameDevelop(){
 }
 
 function seleccionBuchemon(){
-    let inputTortita=document.getElementById('tortita');
-    let inputBananin=document.getElementById('bananin');
-    let inputPollito=document.getElementById('pollito');
+    let inputHipodoge=document.getElementById('hipodoge');
+    let inputCapipepo=document.getElementById('capipepo');
+    let inputRatigueya=document.getElementById('ratigueya');
     let spanBucheAliado=document.getElementById('bucheAliado');
-    if(inputTortita.checked==false && inputPollito.checked==false && inputBananin.checked==false){
+    if(inputHipodoge.checked==false && inputRatigueya.checked==false && inputCapipepo.checked==false){
         alert("Seleccione un Buchemon"); 
     }   
     else{
-        if(inputTortita.checked){
-            spanBucheAliado.innerHTML='Tortita';
+        if(inputHipodoge.checked){
+            spanBucheAliado.innerHTML='Hipodoge';
         }
-        else if(inputBananin.checked){
-            spanBucheAliado.innerHTML="Bananin";
+        else if(inputCapipepo.checked){
+            spanBucheAliado.innerHTML="Capipepo";
         }
-        else if(inputPollito.checked){
-            spanBucheAliado.innerHTML="Pollito";
+        else if(inputRatigueya.checked){
+            spanBucheAliado.innerHTML="Ratigueya";
         }
         let sectionAtaque=document.getElementById('seleccion-ataque')
-        sectionAtaque.style.display="block"
+        sectionAtaque.style.display="flex"
         let sectionBuche=document.getElementById('seleccion--buche')
         sectionBuche.style.display="none"
         seleccionBuchemonEnemigo();
@@ -53,13 +53,13 @@ function seleccionBuchemonEnemigo(){
     let bucheEnemigo=alet(1,3);
     let spanBucheEnemigo=document.getElementById('bucheEnemigo');
     if(bucheEnemigo==1){
-        spanBucheEnemigo.innerHTML='Tortita';
+        spanBucheEnemigo.innerHTML='Hipodoge';
     }   
     else if(bucheEnemigo==2){
-        spanBucheEnemigo.innerHTML="Bananin";
+        spanBucheEnemigo.innerHTML="Capipepo";
     }
     else{
-        spanBucheEnemigo.innerHTML="Pollito";
+        spanBucheEnemigo.innerHTML="Ratigueya";
     }
 }
 
@@ -99,13 +99,20 @@ function ataqueEnemigo(){
 }
 
 function fedback(resultado){
-    let sectionMensaje=document.getElementById('feedback');
-    let parrafo=document.createElement('p');
+    let sectionMensaje=document.getElementById('notificacion');
+    let ataquePlayer=document.getElementById('ataqueJugador');
+    let ataqueMaquina=document.getElementById('ataqueEnemigo');
+    
+    let nuevoAtaqueJugador=document.createElement('p');
+    let nuevoAtaqueEnemigo=document.createElement('p');
 
-    parrafo.innerHTML='Tu buchemon ataco con '+ataqueJugador+'. El buchemon enemigo ataco con '+ataquePC+' - '+resultado+' !';
+    sectionMensaje.innerHTML=resultado;
+    nuevoAtaqueJugador.innerHTML=ataqueJugador;
+    nuevoAtaqueEnemigo.innerHTML=ataquePC;
     
 
-    sectionMensaje.appendChild(parrafo)
+    ataquePlayer.appendChild(nuevoAtaqueJugador);
+    ataqueMaquina.appendChild(nuevoAtaqueEnemigo);
 
 }
 
@@ -128,12 +135,9 @@ function playing(jugador, maquina){
 }
 
 function fedbackVidas(resultadoFinal){
-    let sectionMensaje=document.getElementById('feedback');
-    let parrafo=document.createElement('p');
-
-    parrafo.innerHTML=resultadoFinal;
+    let sectionMensaje=document.getElementById('notificacion');
     
-    sectionMensaje.appendChild(parrafo)
+    sectionMensaje.innerHTML=resultadoFinal
 
     let btnFuego = document.getElementById('ataqueFuego');
     btnFuego.disabled=true;

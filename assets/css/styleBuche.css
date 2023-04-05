@@ -1,7 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+*,*::after,*::before {
+    box-sizing: inherit;
+}
+
+body {
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #0B2447;
+    color: white;
+}
+
+.seleccion--buche{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .seleccion_container{
-    display: inline;
+    display: flex;
+    gap: 1rem;
+
+}
+
+.titulo {
+    font-size: 3.6rem;
+    font-family:fredoka one,cursive;
+    text-align: center;
+}
+
+.subtitulo {
+    font-size: 2rem;
+}
+
+/* Seleccion de buchemon */
+input {
+    display: none;
+}
+
+.seleccion_container--tarjeta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #19376D;
+    width: 26rem;
+    height: 15rem;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 2rem;
+    font-size: 2.4rem;
+}
+.seleccion_container--tarjeta img {
+    width: 12rem;
+    
+    
 }
 
 .seleccion_container--parrafo{
     display: inline;
+}
+
+.seleccion_container--button {
+    width: 26rem;
+    padding: 1rem;
+    border-radius: 2rem;
+    border: 1px solid white;
+    background-color: transparent;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    cursor: pointer;
+
+}
+
+/*  Seleccion de ataque */
+
+.seleccion-ataque {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ataque_container--button{
+    background-color: #19376D;
+    width: 26rem;
+    margin: auto 0.1rem;
+    padding: 1rem;
+    border-radius: 2rem;
+    border: 1px solid white;
+    border: transparent;
+    font-size: 2rem;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    cursor: pointer;
+}
+
+.feedback {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+    width: 30rem;
+    height: 12rem;
+    border-radius: 2rem;
+    background-color: white;
+}
+
+.feedback p {
+    color: black;
+}
+
+.btn-reload {
+    background-color: white;
+    border: transparent;
+    border-radius: 2rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    cursor: pointer;
+    border: 0.1rem solid black;
+
+
+}
+
+/* Informacion */
+
+.info_container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10rem;
+    align-items: center;
+    justify-items: center;
+}
+
+.ataque_container--vidaAliado, .ataque_container--vidaEnemigo {
+    text-align: center;
+}
+
+input:checked + label {
+    background-color: #576CBC;
 }

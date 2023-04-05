@@ -9,35 +9,62 @@
     <script src="assets/js/buchemon.js"></script>
 </head>
 <body>
-    <h1>BUCHEMON!🎂🥙🌮</h1>
+    <h1 class="titulo">BUCHEMON!🎂🥙🌮</h1>
+    <!-- Eleccion de Buchemon -->
     <section class="seleccion--buche" id="seleccion--buche">
-        <h2>Elige a tu Buchemon</h2>
+        <h2 class="subtitulo">Elige a tu Buchemon</h2>
         <div class="seleccion_container">
-            <label for="tortita">tortita</label>
-            <input type="radio" name="buchemon" id="tortita">
-            <label for="bananin">bananin</label>
-            <input type="radio" name="buchemon" id="bananin">
-            <label for="pollito">pollito</label>
-            <input type="radio" name="buchemon" id="pollito">
-            <button class="seleccion_container--button" id="seleccion-buche">Seleccionar</button>
+            <input type="radio" name="buchemon" id="hipodoge">
+            <label class="seleccion_container--tarjeta" for="hipodoge">
+                <p>Hipodoge</p>
+                <img src="https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_hipodoge_attack.png" alt="hipodoge">
+            </label>
+            <input type="radio" name="buchemon" id="capipepo">
+            <label class="seleccion_container--tarjeta" for="capipepo">
+                <p>Capipepo</p>
+                <img src="https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_capipepo_attack.png" alt="capipeto">
+            </label>
+            <input type="radio" name="buchemon" id="ratigueya">
+            <label class="seleccion_container--tarjeta" for="ratigueya">
+                <p>Ratigueya</p>
+                <img src="https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_ratigueya_attack.png" alt="ratigueya">
+            </label>
+            
         </div>  
+        <button class="seleccion_container--button" id="seleccion-buche">Seleccionar</button>
     </section>
+
+    <!-- Seleccion de ataque -->
     <section class="seleccion-ataque" id="seleccion-ataque">
         <h2>Elige a tu ataque</h2>
-        <div class="ataque_container">
-            <p class="ataque_container--vidaAliado">Tu buchemon <span id="bucheAliado"></span> tiene <span id="bucheAliadoVida">3</span> vidas</p>
-            <p class="ataque_container--vidaAliado">Buchemon enemigo <span id="bucheEnemigo"></span> tiene <span id="bucheEnemigoVida">3</span> vidas</p>
+        <div class="ataque_container"> 
             <div class="ataque_container--opcion">
-                <button class="seleccion_container--button" id="ataqueFuego">Fuego🔥</button>
-                <button class="seleccion_container--button" id="ataqueAgua">Agua💧</button>
-                <button class="seleccion_container--button" id="ataqueTierra">Tierra🌱</button>
+                <button class="ataque_container--button" id="ataqueFuego">Fuego🔥</button>
+                <button class="ataque_container--button" id="ataqueAgua">Agua💧</button>
+                <button class="ataque_container--button" id="ataqueTierra">Tierra🌱</button>
             </div>
         </div>
+
+        <section id="feedback" class="feedback">
+            <p id="notificacion"></p>
+            <section class="reiniciar" id="reiniciar">
+                <button id="btnReload" class="btn-reload">Reiniciar</button>
+            </section>
+        </section>   
+
+        <div class="info_container">
+            <div class="ataque_container--vidaAliado">
+                <p id="bucheAliadoVida">3</p>
+                <p id="bucheAliado"></p>
+                <div id="ataqueJugador"></div>
+            </div>
+            <div class="ataque_container--vidaAliado"s>
+                <p id="bucheEnemigoVida">3</p>
+                <p id="bucheEnemigo"></p>
+                <div id="ataqueEnemigo"></div>
+            </div>
+        </div> 
     </section>
-    <section class="feedback" id="feedback"></section>
-    <section class="reiniciar" id="reiniciar">
-        <button id="btnReload">Reiniciar</button>
-    </section>
-    
+     
 </body>
 </html>
