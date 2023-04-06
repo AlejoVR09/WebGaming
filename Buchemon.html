@@ -21,6 +21,12 @@
     <section id="mapaContainer" class="mapa_container">
         <h1 class="titulo">Recorre el mapa con tu Mokepon</h1>
         <canvas id="mapa" class="mapa"></canvas>
+        <div class="button_container">
+            <button class="seleccion_container--button button1" onmousedown="moverArriba()" onmouseup="detenerMovimiento()">Arriba</button>
+            <button class="seleccion_container--button button2" onmousedown="moverAbajo()" onmouseup="detenerMovimiento()">Abajo</button>
+            <button class="seleccion_container--button button3" onmousedown="moverDerecha()" onmouseup="detenerMovimiento()">Derecha</button>
+            <button class="seleccion_container--button button4" onmousedown="moverIzquierda()" onmouseup="detenerMovimiento()">Izquierda</button>
+        </div>
     </section>
 
     <!-- Seleccion de ataque -->

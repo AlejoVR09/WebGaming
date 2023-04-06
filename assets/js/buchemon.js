@@ -32,26 +32,59 @@ const mapaContainer=document.getElementById('mapaContainer');
 /* Mapa */
 const mapa=document.getElementById('mapa');
 let lienzo = mapa.getContext('2d');
+let mapaBackground =new Image();
+mapaBackground.src= "https://static.platzi.com/media/user_upload/mokemap-ca51ea18-7ac8-492f-be96-6181d766a99d.jpg";    
+let anchoTotal=window.innerWidth - 200;
+let anchoMaximo=800;  
+let alto= anchoTotal*600/800;
+if (anchoTotal > anchoMaximo) {
+    mapa.width=anchoMaximo;
+    mapa.height=anchoMaximo*600/800;
+} else {
+    mapa.width=anchoTotal;
+    mapa.height=alto;
+}
 
 /* Clases */
 
 class Mokepon {
-    constructor(nombre,foto,vida){
+    constructor(nombre,foto,vida, fotoMapa){
         this.nombre =nombre;
         this.foto=foto;
         this.vida=vida;
         this.ataques=[];
+        this.ancho=40
+        this.largo=40
+        this.x=alet(0,mapa.width - this.ancho);
+        this.y=alet(0,mapa.height - this.largo);
+        this.imagen=new Image();
+        this.imagen.src=fotoMapa;
+        this.velocidadX=0;
+        this.velocidadY=0;
+    }
+
+    pintarMokepon(){
+        lienzo.drawImage(
+            this.imagen,
+            this.x,
+            this.y,
+            this.ancho,
+            this.largo); 
     }
 }
 
 
 /* Instancias */
 
-let hipodoge = new Mokepon('hipodoge',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_hipodoge_attack.png",3)
+let hipodoge = new Mokepon('hipodoge',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_hipodoge_attack.png",3,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/hipodoge.png')
 
-let capipepo = new Mokepon('capipepo',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_capipepo_attack.png",5)
+let capipepo = new Mokepon('capipepo',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_capipepo_attack.png",5,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/capipepo.png')
 
-let ratigueya = new Mokepon('ratigueya',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_ratigueya_attack.png",4)
+let ratigueya = new Mokepon('ratigueya',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_ratigueya_attack.png",4,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/ratigueya.png')
+
+let Princesa = new Mokepon('Princesa',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_ratigueya_attack.png",4,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/ratigueya.png')
+
+let ratigueyaEnemiga = new Mokepon('ratigueya',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_ratigueya_attack.png",4,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/ratigueya.png')
 
 
 hipodoge.ataques.push(
@@ -78,18 +111,36 @@ ratigueya.ataques.push(
     { nombre: 'Agua💧', id: 'ataqueAgua' },
     { nombre: 'Tierra🌱', id: 'ataqueTierra' },
 )
+
+Princesa.ataques.push(
+    { nombre: 'Fuego🔥', id: 'ataqueFuego' },
+    { nombre: 'Fuego🔥', id: 'ataqueFuego' },
+    { nombre: 'Fuego🔥', id: 'ataqueFuego' },
+    { nombre: 'Agua💧', id: 'ataqueAgua' },
+    { nombre: 'Tierra🌱', id: 'ataqueTierra' },
+)
+
+ratigueyaEnemiga.ataques.push(
+    { nombre: 'Fuego🔥', id: 'ataqueFuego' },
+    { nombre: 'Fuego🔥', id: 'ataqueFuego' },
+    { nombre: 'Fuego🔥', id: 'ataqueFuego' },
+    { nombre: 'Agua💧', id: 'ataqueAgua' },
+    { nombre: 'Tierra🌱', id: 'ataqueTierra' },
+)
 /* Variables */
 let mokepones = [];
 let botones= [];
 let buchemonJugador;
+let buchemonActual;
 let buchemonEnemigo;
 let ataquesEnemigo= [];
 let ataqueJugador= [];
 let ataquePC= [];
 let vidasJugador;
 let vidasPC;
+let intervalo;
 
-mokepones.push(hipodoge,capipepo,ratigueya);
+mokepones.push(hipodoge,capipepo,ratigueya,Princesa);
 
 
 /* Funciones de desarrollo */
@@ -140,30 +191,22 @@ function seleccionBuchemon(){
             buchemonJugador=inputRatigueya.id;
         }
 
-        // sectionAtaque.style.display="flex"
-        mapaContainer.style.display="flex"
-        let caradeCapipepo =new Image();
-        caradeCapipepo.src=capipepo.foto;
-        lienzo.drawImage(caradeCapipepo,
-            5,
-            15,
-            100,
-            100);
-        
-        sectionBuche.style.display="none"
+        mapaContainer.style.display="flex";
+        iniciarMovmiento();
 
-        vidaAliada(buchemonJugador)
+        sectionBuche.style.display="none";
+
+        vidaAliada(buchemonJugador);
         extraerAtaques(buchemonJugador);
-        seleccionBuchemonEnemigo();
     } 
 }
 
-function seleccionBuchemonEnemigo(){
-    let bucheEnemigo=alet(1,mokepones.length);
-    buchemonEnemigo=mokepones[bucheEnemigo-1].nombre;
-    spanBucheEnemigo.innerHTML= mokepones[bucheEnemigo-1].nombre;
-    ataquesEnemigo=mokepones[bucheEnemigo-1].ataques;
-    vidasPC=mokepones[bucheEnemigo-1].vida;
+function seleccionBuchemonEnemigo(enemigo){
+    // let bucheEnemigo=alet(1,mokepones.length);
+    buchemonEnemigo=enemigo.nombre;
+    spanBucheEnemigo.innerHTML=buchemonEnemigo;
+    ataquesEnemigo=enemigo.ataques;
+    vidasPC=enemigo.vida;
     spanBucheEnemigoVida.innerHTML=vidasPC;
     dinamismoAtaques();
 
@@ -224,8 +267,10 @@ function extraerAtaques(buchemonJugador){
     for (let i = 0; i < mokepones.length; i++) {
         if (buchemonJugador===mokepones[i].nombre) {
             ataques=mokepones[i].ataques;
+            buchemonActual=mokepones[i];
         }
     }
+    
     mostrarAtaques(ataques)
 }
 
@@ -314,6 +359,96 @@ function vidaAliada(buchemon){
 
 function reloadPage(){
     location.reload();
+}
+
+/* Mapa con canvas */
+function iniciarMovmiento(){
+    intervalo= setInterval(pintarCanvas,1);
+    window.addEventListener('keydown',presionar);
+    window.addEventListener('keyup',detenerMovimiento)
+}
+
+function pintarCanvas(){
+    lienzo.clearRect(0,0,mapa.width,mapa.height)
+    buchemonActual.x=buchemonActual.x + buchemonActual.velocidadX;
+    buchemonActual.y=buchemonActual.y + buchemonActual.velocidadY;
+    lienzo.drawImage(
+        mapaBackground,
+        0,
+        0,
+        mapa.width,
+        mapa.height
+    );
+    buchemonActual.pintarMokepon();
+    ratigueyaEnemiga.pintarMokepon();
+
+    if (buchemonActual.velocidadX!==0 ||  buchemonActual.velocidadY!==0) {
+        colisiones(ratigueyaEnemiga)
+    }
+
+}
+
+function moverDerecha(){
+    buchemonActual.velocidadX=5;
+}
+
+function moverAbajo(){
+    buchemonActual.velocidadY=5;
+}
+
+function moverArriba(){
+    buchemonActual.velocidadY= -5;
+}
+
+function moverIzquierda(){
+    buchemonActual.velocidadX=-5;
+}
+
+function detenerMovimiento(){
+    buchemonActual.velocidadX=0;
+    buchemonActual.velocidadY=0;
+}
+
+function presionar(event){
+    switch (event.key) {
+        case 'w':
+            moverArriba();
+            break;
+        case 's':
+            moverAbajo();
+            break;
+        case 'd':
+            moverDerecha();
+            break;
+        case 'a':
+            moverIzquierda();
+            break;
+        default:
+            break;
+    }
+}
+
+function colisiones(enemigo){
+    enemigoArriba=enemigo.y;
+    enemigoAbajo=enemigo.y + enemigo.largo;
+    enemigoDerecha=enemigo.x + enemigo.ancho;
+    enemigoIzquierda=enemigo.x;
+
+    jugadorArriba=buchemonActual.y;
+    jugadorAbajo=buchemonActual.y + buchemonActual.largo;
+    jugadorDerecha=buchemonActual.x + buchemonActual.ancho;
+    jugadorIzquierda=buchemonActual.x;
+
+    if (jugadorAbajo<enemigoArriba || jugadorArriba>enemigoAbajo || jugadorDerecha<enemigoIzquierda || jugadorIzquierda>enemigoDerecha) {
+        return
+    }
+    else {
+        clearInterval(intervalo)
+        detenerMovimiento();
+        sectionAtaque.style.display="flex";
+        mapaContainer.style.display="none";
+        seleccionBuchemonEnemigo(enemigo);
+    }
 }
 
 window.addEventListener('load',gameDevelop);
