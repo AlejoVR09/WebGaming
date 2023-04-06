@@ -27,6 +27,11 @@ const sectionReload=document.getElementById('reiniciar')
 const ataquePlayer=document.getElementById('ataqueJugador');
 const ataqueMaquina=document.getElementById('ataqueEnemigo');
 const ataqueContainer=document.getElementById('ataqueContainer');
+const mapaContainer=document.getElementById('mapaContainer');
+
+/* Mapa */
+const mapa=document.getElementById('mapa');
+let lienzo = mapa.getContext('2d');
 
 /* Clases */
 
@@ -89,8 +94,9 @@ mokepones.push(hipodoge,capipepo,ratigueya);
 
 /* Funciones de desarrollo */
 function gameDevelop(){
-    sectionAtaque.style.display="none"
-    sectionReload.style.display='none'
+    sectionAtaque.style.display="none";
+    sectionReload.style.display='none';
+    mapaContainer.style.display='none';
 
     mokepones.forEach((mokepon) =>{
         let data= `
@@ -134,7 +140,16 @@ function seleccionBuchemon(){
             buchemonJugador=inputRatigueya.id;
         }
 
-        sectionAtaque.style.display="flex"
+        // sectionAtaque.style.display="flex"
+        mapaContainer.style.display="flex"
+        let caradeCapipepo =new Image();
+        caradeCapipepo.src=capipepo.foto;
+        lienzo.drawImage(caradeCapipepo,
+            5,
+            15,
+            100,
+            100);
+        
         sectionBuche.style.display="none"
 
         vidaAliada(buchemonJugador)
@@ -232,15 +247,18 @@ function dinamismoAtaques(){
         boton.addEventListener('click', (e)=>{
             if (e.target.textContent==="Fuego🔥") {
                 ataqueJugador.push("Fuego🔥")
+                boton.style.background= '#112f58';
                 boton.disabled=true;
             }
             else if (e.target.textContent==="Agua💧") {
                 ataqueJugador.push("Agua💧")
+                boton.style.background= '#112f58';
                 boton.disabled=true;
             }
             else{
                 ataqueJugador.push('Tierra🌱')
                 boton.disabled=true;
+                boton.style.background= '#112f58';
             }
             ataqueEnemigo();
         });
