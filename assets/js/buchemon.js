@@ -382,6 +382,7 @@ function pintarCanvas(){
         mapa.height
     );
     buchemonActual.pintarMokepon();
+    enviarPosicion(buchemonActual.x,buchemonActual.y);
     ratigueyaEnemiga.pintarMokepon();
 
     if (buchemonActual.velocidadX!==0 ||  buchemonActual.velocidadY!==0) {
@@ -471,6 +472,19 @@ function enviarId(buchemonJugador){
         },
         body: JSON.stringify(
             {mokepon:buchemonJugador
+        })
+    })
+}
+
+function enviarPosicion(x,y){
+    fetch(`http://localhost:3000/mokepon/${jugadorId}/posicion`, {
+        method: 'post',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+            x,
+            y
         })
     })
 }
