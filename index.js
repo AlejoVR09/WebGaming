@@ -38,6 +38,10 @@ class Jugador{
     this.y=y;
   }
 
+  asignarAtaques(ataques){
+    this.ataques=ataques;
+  }
+
 }
 
 class Mokepon{
@@ -81,8 +85,24 @@ app.post('/mokepon/:jugadorid/posicion', (req,res) => {
   });
 })
 
+app.post('/mokepon/:jugadorid/ataques', (req,res) => {
+  const jugadorid = req.params.jugadorid || "";
+  const ataques=req.body.ataques || [];
+  const index= jugadores.findIndex((jugador) => jugadorid === jugador.id)
+  if (index>=0) {
+    jugadores[index].asignarAtaques(ataques)
+  }
+  const enemigos =jugadores.filter((jugador) => jugador.id !== jugadorid);
+  res.end();
+})
 
-
+app.get("/mokepon/:jugadorid/ataques", (req, res) => {
+  const jugadorid = req.params.jugadorid || ""
+  const jugador = jugadores.find((jugador) => jugador.id === jugadorid)
+  res.send({
+    ataques: jugador.ataques || []
+  })
+})
 
 // Activamos el servidor en el puerto 3000
 app.listen(port, () => {

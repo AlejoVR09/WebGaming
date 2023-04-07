@@ -48,7 +48,8 @@ if (anchoTotal > anchoMaximo) {
 /* Clases */
 
 class Mokepon {
-    constructor(nombre,foto,vida, fotoMapa){
+    constructor(nombre,foto,vida, fotoMapa, id=null){
+        this.id=id;
         this.nombre =nombre;
         this.foto=foto;
         this.vida=vida;
@@ -120,6 +121,7 @@ Princesa.ataques.push(
 )
 /* Variables */
 let jugadorId=null;
+let enemigoId=null;
 let mokepones = [];
 let mokeponesEnemigos= [];
 let botones= [];
@@ -132,6 +134,7 @@ let ataquePC= [];
 let vidasJugador;
 let vidasPC;
 let intervalo;
+let intervalo1
 
 mokepones.push(hipodoge,capipepo,ratigueya);
 
@@ -199,7 +202,6 @@ function seleccionBuchemonEnemigo(enemigo){
     // let bucheEnemigo=alet(1,mokepones.length);
     buchemonEnemigo=enemigo.nombre;
     spanBucheEnemigo.innerHTML=buchemonEnemigo;
-    ataquesEnemigo=enemigo.ataques;
     vidasPC=enemigo.vida;
     spanBucheEnemigoVida.innerHTML=vidasPC;
     dinamismoAtaques();
@@ -222,20 +224,16 @@ function seleccionBuchemonEnemigo(enemigo){
 //     ataqueEnemigo();
 // }
 
-function ataqueEnemigo(){
-    let ataqueAleatorioEnemigo=alet(1,ataquesEnemigo.length-1);
-    ataquePC.push(ataquesEnemigo[ataqueAleatorioEnemigo].nombre)
+// function ataqueEnemigo(){
+//     let ataqueAleatorioEnemigo=alet(1,ataquesEnemigo.length-1);
+//     ataquePC.push(ataquesEnemigo[ataqueAleatorioEnemigo].nombre)
 
-    combate();
-}
+//     combate();
+// }
 
-function combate(){
-    if (ataqueJugador.length==5) {
-        playing();
-    }
-}
 
-function playing(jugador, maquina){   
+function playing(){ 
+    clearInterval(intervalo1)  
     for (let i = 0; i <5; i++) {
         if ((ataqueJugador[i] == 'Fuego🔥' && ataquePC[i] == 'Tierra🌱') || (ataqueJugador[i] == 'Agua💧' && ataquePC[i] == 'Fuego🔥') || (ataqueJugador[i] == 'Tierra🌱' && ataquePC[i] == 'Agua💧')) {
             spanBucheEnemigoVida.innerHTML=--vidasPC;
@@ -299,7 +297,13 @@ function dinamismoAtaques(){
                 boton.disabled=true;
                 boton.style.background= '#112f58';
             }
-            ataqueEnemigo();
+            
+            if (ataqueJugador.length===5) {
+                enviarAtaque();
+            }
+                
+            
+            
         });
     });
 }
@@ -357,7 +361,7 @@ function reloadPage(){
 
 /* Mapa con canvas */
 function iniciarMovmiento(){
-    intervalo= setInterval(pintarCanvas,1);
+    intervalo= setInterval(pintarCanvas,50);
     window.addEventListener('keydown',presionar);
     window.addEventListener('keyup',detenerMovimiento)
 }
@@ -376,7 +380,10 @@ function pintarCanvas(){
     buchemonActual.pintarMokepon();
     enviarPosicion(buchemonActual.x,buchemonActual.y);
     mokeponesEnemigos.forEach((mokepon) => {
-        mokepon.pintarMokepon();
+        if(mokepon != undefined){
+            mokepon.pintarMokepon()
+            colisiones(mokepon)
+        }
     });
 
 
@@ -437,7 +444,8 @@ function colisiones(enemigo){
         return
     }
     else {
-        clearInterval(intervalo)
+        clearInterval(intervalo);
+        enemigoId=enemigo.id;
         detenerMovimiento();
         sectionAtaque.style.display="flex";
         mapaContainer.style.display="none";
@@ -490,13 +498,13 @@ function enviarPosicion(x,y){
                         const mokeponNombre= enemigo.mokepon.nombre || "";
                     
                         if (enemigo.mokepon.nombre==="hipodoge") {
-                            mokeponEnemigo = new Mokepon('hipodoge',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_hipodoge_attack.png",5,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/hipodoge.png');                
+                            mokeponEnemigo = new Mokepon('hipodoge',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_hipodoge_attack.png",5,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/hipodoge.png',enemigo.id);                
                         } 
                         else if(enemigo.mokepon.nombre==="capipepo"){
-                            mokeponEnemigo = new Mokepon('capipepo',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_capipepo_attack.png",5,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/capipepo.png');  
+                            mokeponEnemigo = new Mokepon('capipepo',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_capipepo_attack.png",5,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/capipepo.png',enemigo.id);  
                         }
                         else if(enemigo.mokepon.nombre==="ratigueya"){
-                            mokeponEnemigo = new Mokepon('ratigueya',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_ratigueya_attack.png",5,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/ratigueya.png');
+                            mokeponEnemigo = new Mokepon('ratigueya',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_ratigueya_attack.png",5,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/ratigueya.png',enemigo.id);
                         }
 
                         
@@ -510,4 +518,35 @@ function enviarPosicion(x,y){
         }
     })
 }
+
+function enviarAtaque(){
+    fetch(`http://localhost:3000/mokepon/${jugadorId}/ataques`, {
+        method: 'post',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+            ataques: ataqueJugador
+        })
+    })
+    intervalo1 = setInterval(obtenerAtaques, 50)
+    
+}
+
+function obtenerAtaques() {
+    fetch(`http://localhost:3000/mokepon/${enemigoId}/ataques`)
+        .then(function (res) {
+            if (res.ok) {
+                res.json()
+                    .then(function ({ ataques }) {
+                        console.log(ataques)
+                        if (ataques.length === 5) {
+                            ataquePC = ataques
+                            playing()
+                        }
+                    })
+            }
+        })
+}
+
 window.addEventListener('load',gameDevelop);
