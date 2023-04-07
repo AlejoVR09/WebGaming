@@ -76,15 +76,15 @@ class Mokepon {
 
 /* Instancias */
 
-let hipodoge = new Mokepon('hipodoge',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_hipodoge_attack.png",3,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/hipodoge.png')
+let hipodoge = new Mokepon('hipodoge',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_hipodoge_attack.png",5,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/hipodoge.png')
 
 let capipepo = new Mokepon('capipepo',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_capipepo_attack.png",5,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/capipepo.png')
 
-let ratigueya = new Mokepon('ratigueya',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_ratigueya_attack.png",4,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/ratigueya.png')
+let ratigueya = new Mokepon('ratigueya',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_ratigueya_attack.png",5,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/ratigueya.png')
 
-let Princesa = new Mokepon('Princesa',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_ratigueya_attack.png",4,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/ratigueya.png')
+let Princesa = new Mokepon('Princesa',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_ratigueya_attack.png",5,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/ratigueya.png')
 
-let ratigueyaEnemiga = new Mokepon('ratigueya',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_ratigueya_attack.png",4,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/ratigueya.png')
+let ratigueyaEnemiga = new Mokepon('ratigueya',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_ratigueya_attack.png",5,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/ratigueya.png')
 
 
 hipodoge.ataques.push(
@@ -128,6 +128,7 @@ ratigueyaEnemiga.ataques.push(
     { nombre: 'Tierra🌱', id: 'ataqueTierra' },
 )
 /* Variables */
+let jugadorId=null;
 let mokepones = [];
 let botones= [];
 let buchemonJugador;
@@ -169,7 +170,7 @@ function gameDevelop(){
  
     btnReload.addEventListener('click',reloadPage);
 
-
+    unirseJuego();
 
 }
 
@@ -190,6 +191,7 @@ function seleccionBuchemon(){
             spanBucheAliado.innerHTML=inputRatigueya.id;
             buchemonJugador=inputRatigueya.id;
         }
+        enviarId(buchemonJugador);
 
         mapaContainer.style.display="flex";
         iniciarMovmiento();
@@ -451,4 +453,25 @@ function colisiones(enemigo){
     }
 }
 
+/* Backend */
+function unirseJuego(){
+    fetch('http://localhost:3000/unirse')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        jugadorId=data;
+    });
+}
+
+function enviarId(buchemonJugador){
+    fetch(`http://localhost:3000/mokepon/${jugadorId}`, {
+        method: 'post',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify(
+            {mokepon:buchemonJugador
+        })
+    })
+}
 window.addEventListener('load',gameDevelop);
