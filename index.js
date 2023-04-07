@@ -74,9 +74,11 @@ app.post('/mokepon/:jugadorid/posicion', (req,res) => {
   if (index>=0) {
     jugadores[index].cambiarPosicion(x,y)
   }
-  console.log(jugadores);
-  console.log(jugadorid);
-  res.end();
+
+  const enemigos =jugadores.filter((jugador) => jugador.id !== jugadorid);
+  res.send({
+    enemigos
+  });
 })
 
 

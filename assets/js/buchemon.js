@@ -84,7 +84,6 @@ let ratigueya = new Mokepon('ratigueya',"https://static.platzi.com/media/tmp/cla
 
 let Princesa = new Mokepon('Princesa',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_ratigueya_attack.png",5,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/ratigueya.png')
 
-let ratigueyaEnemiga = new Mokepon('ratigueya',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_ratigueya_attack.png",5,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/ratigueya.png')
 
 
 hipodoge.ataques.push(
@@ -119,17 +118,10 @@ Princesa.ataques.push(
     { nombre: 'Agua💧', id: 'ataqueAgua' },
     { nombre: 'Tierra🌱', id: 'ataqueTierra' },
 )
-
-ratigueyaEnemiga.ataques.push(
-    { nombre: 'Fuego🔥', id: 'ataqueFuego' },
-    { nombre: 'Fuego🔥', id: 'ataqueFuego' },
-    { nombre: 'Fuego🔥', id: 'ataqueFuego' },
-    { nombre: 'Agua💧', id: 'ataqueAgua' },
-    { nombre: 'Tierra🌱', id: 'ataqueTierra' },
-)
 /* Variables */
 let jugadorId=null;
 let mokepones = [];
+let mokeponesEnemigos= [];
 let botones= [];
 let buchemonJugador;
 let buchemonActual;
@@ -141,7 +133,7 @@ let vidasJugador;
 let vidasPC;
 let intervalo;
 
-mokepones.push(hipodoge,capipepo,ratigueya,Princesa);
+mokepones.push(hipodoge,capipepo,ratigueya);
 
 
 /* Funciones de desarrollo */
@@ -383,11 +375,10 @@ function pintarCanvas(){
     );
     buchemonActual.pintarMokepon();
     enviarPosicion(buchemonActual.x,buchemonActual.y);
-    ratigueyaEnemiga.pintarMokepon();
+    mokeponesEnemigos.forEach((mokepon) => {
+        mokepon.pintarMokepon();
+    });
 
-    if (buchemonActual.velocidadX!==0 ||  buchemonActual.velocidadY!==0) {
-        colisiones(ratigueyaEnemiga)
-    }
 
 }
 
@@ -486,6 +477,37 @@ function enviarPosicion(x,y){
             x,
             y
         })
+    })
+    .then(function(res){
+        if (res.ok) {
+            res.json()
+            .then(function({enemigos}){
+                console.log(enemigos)
+                mokeponesEnemigos= enemigos.map(function(enemigo){
+                    let mokeponEnemigo=null;
+                    if (enemigo.mokepon !== undefined) {
+                        
+                        const mokeponNombre= enemigo.mokepon.nombre || "";
+                    
+                        if (enemigo.mokepon.nombre==="hipodoge") {
+                            mokeponEnemigo = new Mokepon('hipodoge',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_hipodoge_attack.png",5,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/hipodoge.png');                
+                        } 
+                        else if(enemigo.mokepon.nombre==="capipepo"){
+                            mokeponEnemigo = new Mokepon('capipepo',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_capipepo_attack.png",5,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/capipepo.png');  
+                        }
+                        else if(enemigo.mokepon.nombre==="ratigueya"){
+                            mokeponEnemigo = new Mokepon('ratigueya',"https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-35-assets-mokepones/programar/mokepon/assets/mokepons_mokepon_ratigueya_attack.png",5,'https://static.platzi.com/media/tmp/class-files/github/curso-programacion-basica/curso-programacion-basica-65-clases-methods/programar/mokepon/assets/ratigueya.png');
+                        }
+
+                        
+                        mokeponEnemigo.x=enemigo.x
+                        mokeponEnemigo.y=enemigo.y
+                        return mokeponEnemigo;
+                    }
+                    
+                })
+            })
+        }
     })
 }
 window.addEventListener('load',gameDevelop);
